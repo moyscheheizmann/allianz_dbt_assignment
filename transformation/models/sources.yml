@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: raw
-    database: casestudy
+    database: dbt_dev
     schema: raw
     tables:
       - name: customers

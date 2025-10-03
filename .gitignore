@@ -34,3 +34,4 @@ postgres-data/
 
 # Misc
 .DS_Store
+.claude/
