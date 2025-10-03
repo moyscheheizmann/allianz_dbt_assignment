@@ -355,52 +355,50 @@ erDiagram
 
 ```mermaid
 erDiagram
-    %% Hubs
     HUB_CUSTOMER {
-        string hk_customer_h PK "MD5 hash of customer_id"
-        int customer_id BK
+        string hk_customer_h PK
+        int customer_id
         timestamp load_dts
         string record_source
     }
 
     HUB_ACCOUNT {
-        string hk_account_h PK "MD5 hash of account_id"
-        int account_id BK
+        string hk_account_h PK
+        int account_id
         timestamp load_dts
         string record_source
     }
 
     HUB_LOAN {
-        string hk_loan_h PK "MD5 hash of loan_id"
-        int loan_id BK
+        string hk_loan_h PK
+        int loan_id
         timestamp load_dts
         string record_source
     }
 
     HUB_TRANSACTION {
-        string hk_transaction_h PK "MD5 hash of transaction_id"
-        int transaction_id BK
+        string hk_transaction_h PK
+        int transaction_id
         timestamp load_dts
         string record_source
     }
 
     HUB_BRANCH {
-        string hk_branch_h PK "MD5 hash of branch_id"
-        int branch_id BK
+        string hk_branch_h PK
+        int branch_id
         timestamp load_dts
         string record_source
     }
 
     HUB_CURRENCY {
-        string hk_currency_h PK "MD5 hash of currency_iso_code"
-        string currency_iso_code BK
+        string hk_currency_h PK
+        string currency_iso_code
         timestamp load_dts
         string record_source
     }
 
-    %% Links
     LINK_CUSTOMER_ACCOUNT {
-        string hk_customer_account_l PK "MD5 hash of hubs"
+        string hk_customer_account_l PK
         string hk_customer_h FK
         string hk_account_h FK
         timestamp load_dts
@@ -439,10 +437,9 @@ erDiagram
         string record_source
     }
 
-    %% Satellites
     SAT_CUSTOMER {
         string hk_customer_h FK
-        timestamp load_dts
+        timestamp load_dts PK
         timestamp load_end_dts
         string hashdiff
         string firstname
@@ -453,7 +450,7 @@ erDiagram
 
     SAT_ACCOUNT {
         string hk_account_h FK
-        timestamp load_dts
+        timestamp load_dts PK
         timestamp load_end_dts
         string hashdiff
         string account_type
@@ -463,7 +460,7 @@ erDiagram
 
     SAT_LOAN {
         string hk_loan_h FK
-        timestamp load_dts
+        timestamp load_dts PK
         timestamp load_end_dts
         string hashdiff
         string loan_type
@@ -475,7 +472,7 @@ erDiagram
 
     SAT_TRANSACTION {
         string hk_transaction_h FK
-        timestamp load_dts
+        timestamp load_dts PK
         timestamp load_end_dts
         string hashdiff
         string transaction_type
@@ -486,7 +483,7 @@ erDiagram
 
     SAT_FX_RATE {
         string hk_fx_rate_l FK
-        timestamp load_dts
+        timestamp load_dts PK
         timestamp load_end_dts
         string hashdiff
         double exchange_rate
@@ -494,23 +491,22 @@ erDiagram
         string record_source
     }
 
-    %% Relationships
-    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_ACCOUNT : ""
-    HUB_ACCOUNT ||--o{ LINK_CUSTOMER_ACCOUNT : ""
-    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_LOAN : ""
-    HUB_LOAN ||--o{ LINK_CUSTOMER_LOAN : ""
-    HUB_ACCOUNT ||--o{ LINK_ACCOUNT_TRANSACTION : ""
-    HUB_TRANSACTION ||--o{ LINK_ACCOUNT_TRANSACTION : ""
-    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_BRANCH : ""
-    HUB_BRANCH ||--o{ LINK_CUSTOMER_BRANCH : ""
-    HUB_CURRENCY ||--o{ LINK_FX_RATE : "base"
-    HUB_CURRENCY ||--o{ LINK_FX_RATE : "target"
+    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_ACCOUNT : has
+    HUB_ACCOUNT ||--o{ LINK_CUSTOMER_ACCOUNT : has
+    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_LOAN : has
+    HUB_LOAN ||--o{ LINK_CUSTOMER_LOAN : has
+    HUB_ACCOUNT ||--o{ LINK_ACCOUNT_TRANSACTION : has
+    HUB_TRANSACTION ||--o{ LINK_ACCOUNT_TRANSACTION : has
+    HUB_CUSTOMER ||--o{ LINK_CUSTOMER_BRANCH : has
+    HUB_BRANCH ||--o{ LINK_CUSTOMER_BRANCH : has
+    HUB_CURRENCY ||--o{ LINK_FX_RATE : base
+    HUB_CURRENCY ||--o{ LINK_FX_RATE : target
 
-    HUB_CUSTOMER ||--o{ SAT_CUSTOMER : ""
-    HUB_ACCOUNT ||--o{ SAT_ACCOUNT : ""
-    HUB_LOAN ||--o{ SAT_LOAN : ""
-    HUB_TRANSACTION ||--o{ SAT_TRANSACTION : ""
-    LINK_FX_RATE ||--o{ SAT_FX_RATE : ""
+    HUB_CUSTOMER ||--o{ SAT_CUSTOMER : describes
+    HUB_ACCOUNT ||--o{ SAT_ACCOUNT : describes
+    HUB_LOAN ||--o{ SAT_LOAN : describes
+    HUB_TRANSACTION ||--o{ SAT_TRANSACTION : describes
+    LINK_FX_RATE ||--o{ SAT_FX_RATE : describes
 ```
 
 ## Key Challenges Solved
