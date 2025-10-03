@@ -7,7 +7,7 @@ renamed as (
         customer_id,
         trim(firstname) as firstname,
         trim(lastname) as lastname,
-        Age as age,
+        "Age" as age,
         branch_id
     from source
 )
